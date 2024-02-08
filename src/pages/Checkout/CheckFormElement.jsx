@@ -79,9 +79,11 @@ useEffect(() => {
     const { error } = await stripe.confirmPayment({
       elements,
 
+      // redirect : "if_required" ,
       confirmParams: {
 
-        return_url: `http://localhost:5173/order-success`,
+        return_url: window.location.origin + '/order-success',
+        
 
         payment_method_data: {
           billing_details: {

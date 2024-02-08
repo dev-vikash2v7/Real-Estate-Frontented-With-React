@@ -8,14 +8,15 @@ import { useMutation } from "react-query";
 import { createUser } from "../../utils/api";
 import useFavourites from "../../hooks/useFavourites";
 import useBookings from "../../hooks/useBookings";
+import { BASE_URL } from "../../config";
 
 const Layout = () => {
 
   useFavourites()
   useBookings()
 
-  const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();
-  const { setUserDetails } = useContext(UserDetailContext);
+  const { isAuthenticated, user , getAccessTokenSilently} = useAuth0();
+  const { setUserDetails , userDetails } = useContext(UserDetailContext);
 
   const { mutate } = useMutation({
     mutationKey: [user?.email],
@@ -23,22 +24,23 @@ const Layout = () => {
   });
 
   useEffect(() => {
+
     const getTokenAndRegsiter = async () => {
 
-      const res = await getAccessTokenWithPopup({
+      const res = await getAccessTokenSilently({
         authorizationParams: {
-          audience: "http://localhost:3000",
-          scope: "openid profile email",
+          audience: 'http://localhost:3000',
+          scope : "openid profile email"
         },
       });
 
-      console.log('rrrrrrrrrrrrrrrrrrrrr' , res)
-      
       localStorage.setItem("access_token", res);
       setUserDetails((prev) => ({ ...prev, token: res }));
+
+      console.log('user detailts ' , userDetails)
       mutate(res)
     };
-
+    console.log('isauth ' , isAuthenticated , user);
 
     isAuthenticated && getTokenAndRegsiter();
   }, [isAuthenticated]);

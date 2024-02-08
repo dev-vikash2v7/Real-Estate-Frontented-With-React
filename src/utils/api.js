@@ -1,9 +1,10 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../config";
 
 export const api = axios.create({
-  baseURL: "http://127.0.0.1:3000/api",
+  baseURL: BASE_URL + "/api",
 });
 
 export const getAllProperties = async () => {
@@ -40,7 +41,7 @@ export const getProperty = async (id) => {
 
 export const createUser = async (email, token) => {
   try {
-    await api.post(
+   const res =  await api.post(
       `/user/register`,
       { email },
       {
@@ -49,6 +50,7 @@ export const createUser = async (email, token) => {
         },
       }
     );
+    console.log('result of create user : ' , res.data.message )
   } catch (error) {
     toast.error("Something went wrong, Please try again");
     throw error;
@@ -57,6 +59,7 @@ export const createUser = async (email, token) => {
 
 export const bookVisit = async (date, propertyId, email, token) => {
   try {
+
     await api.post(
       `/user/bookVisit/${propertyId}`,
       {
@@ -100,7 +103,6 @@ export const removeBooking = async (id, email, token) => {
 
 export const toFav = async (id, email, token) => {
   try {
-    console.log(id, email ,token)
     await api.post(
       `/user/toFav/${id}`,
       {
@@ -171,7 +173,6 @@ export const getAllBookings = async (email, token) => {
 
 
 export const createResidency = async (data, token) => {
-  console.log(data)
   try{
     const res = await api.post(
       `/residency/create`,

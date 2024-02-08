@@ -1,19 +1,22 @@
-// PaymentPage.js
 
+import { Button } from '@mantine/core';
 import { BiCheckCircle } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import {   useNavigate } from 'react-router-dom';
+import React from 'react';
 
 const OrderSucces = () => {
 
+const nav = useNavigate();
 
   return (
-    <div>
-      <h1 style={{textAlign : 'center' , fontWeight : '600'  , fontSize : '3rem' , marginTop : '20px'}}>Payment Success</h1>
+    <div className="wrapper" style={{height:'60vh' }}>
+      <h1 style={{textAlign : 'center' , fontWeight : '600'  , fontSize : '3rem' , marginTop : '40px'}}>Payment Success</h1>
 
-      <div style={{textAlign:'center'}}>
-        <BiCheckCircle size={80}/>
+      <div style={{textAlign:'center' , margin : 'auto' , display:'flex' , flexDirection : 'column' , justifyContent:'center' , alignItems:'center'}}>
+        <BiCheckCircle size={80} color='green'/>
 
-        <Link to='/'> <p style={{fontSize : '2rem', fontWeight:'bold' , color:'blue' , textDecoration:'underline'}}>Go To Dashboard </p></Link>
+        <Button style={{fontSize : '1.4rem', fontWeight:'bold'  , color:'black' , marginTop : '10px'  }}  onClick={()=> nav('/')}>
+        Go To Dashboard </Button>
         </div>
     </div>
   );
