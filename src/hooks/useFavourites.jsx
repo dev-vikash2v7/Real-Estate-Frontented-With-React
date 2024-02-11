@@ -18,7 +18,6 @@ const useFavourites = () => {
     staleTime: 30000,
   });
 
-  console.log('fav data' , data)
 
   queryRef.current = refetch;
 

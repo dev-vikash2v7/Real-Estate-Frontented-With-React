@@ -39,6 +39,30 @@ export const getProperty = async (id) => {
   }
 };
 
+export const sendPropertyDetails = async (data , userEmail , token) => {
+  try {
+    const response = await api.post(`/residency/send-email/`, 
+    {data , userEmail} ,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+    );
+
+    if (response.status === 400 || response.status === 500) {
+      throw response.data;
+    }
+    toast.success("Property details sent to your email.");
+
+  } catch (error) {
+    toast.error("Something went wrong");
+    throw error;
+  }
+};
+
+
+
 export const createUser = async (email, token) => {
   try {
    const res =  await api.post(

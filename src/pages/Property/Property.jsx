@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
-import { getProperty, removeBooking } from "../../utils/api";
+import { getProperty, removeBooking, sendPropertyDetails } from "../../utils/api";
 import { PuffLoader } from "react-spinners";
-import { AiFillHeart } from "react-icons/ai";
 import "./Property.css";
 
 import { FaShower } from "react-icons/fa";
@@ -17,6 +16,8 @@ import UserDetailContext from "../../context/UserDetailContext.js";
 import { Button } from "@mantine/core";
 import { toast } from "react-toastify";
 import Heart from "../../components/Heart/Heart";
+
+
 const Property = () => {
   const { pathname } = useLocation();
   const id = pathname.split("/").slice(-1)[0];
@@ -28,6 +29,9 @@ const Property = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const { validateLogin } = useAuthCheck();
   const { user } = useAuth0();
+  const [emailLoading , setEmailLoading] = useState(false)
+
+
 
   const {
     userDetails: { token, bookings },
@@ -66,6 +70,15 @@ const Property = () => {
     );
   }
 
+ function  handleSend(){
+  if(emailLoading) toast.success('Details sent to your email')
+else{
+  sendPropertyDetails(data , user.email , token)
+  setEmailLoading(true)
+}
+
+  }
+
   return (
     <div className="wrapper">
       <div className="flexColStart paddings innerWidth property-container">
@@ -99,7 +112,7 @@ const Property = () => {
               {/* parkings */}
               <div className="flexStart facility">
                 <AiTwotoneCar size={20} color="#1F3E72" />
-                <span>{data?.facilities.parkings} Parking</span>
+                <span>{data?.facilities.parking} Parking</span>
               </div>
 
               {/* rooms */}
@@ -161,6 +174,17 @@ const Property = () => {
               email={user?.email}
               amount={data?.price}
             />
+
+              <button
+                className="button"
+                style={{backgroundColor : 'red'}}
+                onClick={() => {
+                  validateLogin() && handleSend() ;
+                }}
+              >
+                 Send Details
+
+              </button>
           </div>
 
           {/* right side */}

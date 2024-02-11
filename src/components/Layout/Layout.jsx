@@ -29,7 +29,7 @@ const Layout = () => {
 
       const res = await getAccessTokenSilently({
         authorizationParams: {
-          audience: 'http://localhost:3000',
+          audience: BASE_URL,
           scope : "openid profile email"
         },
       });
@@ -37,10 +37,10 @@ const Layout = () => {
       localStorage.setItem("access_token", res);
       setUserDetails((prev) => ({ ...prev, token: res }));
 
-      console.log('user detailts ' , userDetails)
+      // console.log('user detailts ' , userDetails)
       mutate(res)
     };
-    console.log('isauth ' , isAuthenticated , user);
+    // console.log('isauth ' , isAuthenticated , user);
 
     isAuthenticated && getTokenAndRegsiter();
   }, [isAuthenticated]);

@@ -44,9 +44,6 @@ const Checkout  = () => {
   },[])
 
 
- const appearance = {
-    theme: 'stripe',
-  };
   const options = {
     clientSecret,
   };
