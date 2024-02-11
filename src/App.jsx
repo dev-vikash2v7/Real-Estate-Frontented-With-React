@@ -15,6 +15,7 @@ import Bookings from "./pages/Bookings/Bookings";
 import Favourites from "./pages/Favourites/Favourites";
 import Checkout from "./pages/Checkout/Checkout";
 import OrderSucces from "./pages/Checkout/OrderSuccess";
+import Contact2 from "./components/Contact/Contact2";
 
 function App() {
 
@@ -38,6 +39,8 @@ function App() {
                 <Route element={<Layout />}>
 
                   <Route path="/" element={<Website />} />
+
+                  <Route path="/contact" element={<Contact2/>}/>
 
                   <Route path="/properties">
                   

@@ -4,10 +4,10 @@ import { MdCall } from "react-icons/md";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import {HiChatBubbleBottomCenter} from 'react-icons/hi2'
 
-const Contact = () => {
+const Contact2 = () => {
   return (
-    <div id="contact-us" className="c-wrapper">
-      <div className="paddings innerWidth flexCenter c-container">
+    <div style={{backgroundColor:'white'}} >
+      <div className="paddings innerWidth flexCenter">
         {/* left side */}
         <div className="flexColStart c-left">
           <span className="orangeText">Our Contact Us</span>
@@ -89,4 +89,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Contact2;

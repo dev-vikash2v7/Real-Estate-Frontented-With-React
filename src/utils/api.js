@@ -198,6 +198,8 @@ export const getAllBookings = async (email, token) => {
 
 export const createResidency = async (data, token) => {
   try{
+    console.log(data)
+    
     const res = await api.post(
       `/residency/create`,
       {

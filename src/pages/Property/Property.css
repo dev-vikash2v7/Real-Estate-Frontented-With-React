@@ -21,7 +21,7 @@
 .property-details{
     width: 100%;
     gap: 2rem;
-    justify-content: space-between;
+    justify-content: space-between; 
 }
 
 .property-details>div{

@@ -47,6 +47,7 @@ const Facilities = ({
   } = useContext(UserDetailContext);
   const { refetch: refetchProperties } = useProperties();
 
+  console.log('preoe ' , propertyDetails)
   const {mutate, isLoading} = useMutation({
     mutationFn: ()=> createResidency({
         ...propertyDetails, facilities: {bedrooms, parkings , bathrooms},
