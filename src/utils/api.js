@@ -39,10 +39,12 @@ export const getProperty = async (id) => {
   }
 };
 
-export const sendPropertyDetails = async (data , userEmail , token) => {
+export const sendPropertyDetails = async (data ,userName ,  userEmail ,contact , token) => {
   try {
+    toast.success("Property details sent to your email.");
+    
     const response = await api.post(`/residency/send-email/`, 
-    {data , userEmail} ,
+    {data ,userName ,  userEmail , contact } ,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -53,7 +55,6 @@ export const sendPropertyDetails = async (data , userEmail , token) => {
     if (response.status === 400 || response.status === 500) {
       throw response.data;
     }
-    toast.success("Property details sent to your email.");
 
   } catch (error) {
     toast.error("Something went wrong");
@@ -198,7 +199,6 @@ export const getAllBookings = async (email, token) => {
 
 export const createResidency = async (data, token) => {
   try{
-    console.log(data)
     
     const res = await api.post(
       `/residency/create`,

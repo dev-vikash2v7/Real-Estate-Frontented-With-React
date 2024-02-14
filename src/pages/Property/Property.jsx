@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import { getProperty, removeBooking, sendPropertyDetails } from "../../utils/api";
 import { PuffLoader } from "react-spinners";
 import "./Property.css";
-
 import { FaShower } from "react-icons/fa";
 import { AiTwotoneCar } from "react-icons/ai";
 import { MdLocationPin, MdMeetingRoom } from "react-icons/md";
@@ -13,10 +12,10 @@ import useAuthCheck from "../../hooks/useAuthCheck";
 import { useAuth0 } from "@auth0/auth0-react";
 import BookingModal from "../../components/BookingModal/BookingModal";
 import UserDetailContext from "../../context/UserDetailContext.js";
-import { Button } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
 import { toast } from "react-toastify";
 import Heart from "../../components/Heart/Heart";
-
+import { TextField } from "@mui/material";
 
 const Property = () => {
   const { pathname } = useLocation();
@@ -27,9 +26,13 @@ const Property = () => {
   );
 
   const [modalOpened, setModalOpened] = useState(false);
+  const [emailOpened, setEmailOpened] = useState(false);
   const { validateLogin } = useAuthCheck();
   const { user } = useAuth0();
   const [emailLoading , setEmailLoading] = useState(false)
+  const [contactNumber, setContactNumber] = useState('');
+  const [error, setError] = useState('');
+  const [name, setName] = useState('');
 
 
 
@@ -71,16 +74,29 @@ const Property = () => {
   }
 
  function  handleSend(){
-  if(emailLoading) toast.success('Details sent to your email')
-else{
-  sendPropertyDetails(data , user.email , token)
-  setEmailLoading(true)
+
+
+
+const isValidContactNumber = /^\d{10}$/.test(contactNumber);
+
+if (!isValidContactNumber  ) {
+  setError('Please enter a valid 10-digit contact number.');
+  return;
 }
+if (!name ) {
+  setError('Please enter a valid name.');
+  return;
+}
+  sendPropertyDetails(data ,name ,  user.email ,contactNumber , token)
+  setEmailLoading(true)
 
   }
 
   return (
     <div className="wrapper">
+    
+
+        
       <div className="flexColStart paddings innerWidth property-container">
         {/* like button */}
         <div className="like">
@@ -179,12 +195,44 @@ else{
                 className="button"
                 style={{backgroundColor : 'red'}}
                 onClick={() => {
-                  validateLogin() && handleSend() ;
+                  validateLogin() && setEmailOpened(true) ;
                 }}
               >
                  Send Details
 
               </button>
+
+    <Modal opened={emailOpened} onClose={()=>setEmailOpened(false)} centered 
+      title="Get Details via Email"
+    
+    >
+      <div
+      className="flexColCenter"
+       style={{  padding: '20px', boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)' }}
+       >
+        <TextField
+          label="Your Name"
+          variant="outlined"
+          fullWidth
+          value={name}
+          onChange={(e)=>setName(e.target.value)}
+          error={!!error}
+          helperText={error}
+          style={{marginBottom:'10px'}}
+        />
+        <TextField
+          label="Contact Number"
+          variant="outlined"
+          fullWidth
+          value={contactNumber}
+          onChange={(e)=>setContactNumber(e.target.value)}
+          error={!!error}
+          helperText={error}
+        />
+        <Button variant="contained" color="primary" onClick={handleSend} style={{ marginTop: '20px' }}>Submit</Button>
+      </div>
+    </Modal>
+    
           </div>
 
           {/* right side */}

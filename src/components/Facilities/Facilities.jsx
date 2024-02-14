@@ -45,12 +45,14 @@ const Facilities = ({
   const {
     userDetails: { token },
   } = useContext(UserDetailContext);
+
   const { refetch: refetchProperties } = useProperties();
 
   console.log('preoe ' , propertyDetails)
   const {mutate, isLoading} = useMutation({
     mutationFn: ()=> createResidency({
-        ...propertyDetails, facilities: {bedrooms, parkings , bathrooms},
+        ...propertyDetails, facilities: {bedrooms, parkings , bathrooms} , userEmail : user?.email
+        ,
     }, token),
     onError: ({ response }) => toast.error(response.data.message, {position: "bottom-right"}),
     onSettled: ()=> {
