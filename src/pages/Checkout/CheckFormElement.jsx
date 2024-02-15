@@ -3,7 +3,6 @@ import {  useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js
 import {
     Button,
   } from "@mui/material";
-import  {BASE_URL}  from "../../config";
 
 
 const CheckFormElement = () => {
@@ -79,7 +78,6 @@ useEffect(() => {
     const { error } = await stripe.confirmPayment({
       elements,
 
-      // redirect : "if_required" ,
       confirmParams: {
 
         return_url: window.location.origin + '/order-success',

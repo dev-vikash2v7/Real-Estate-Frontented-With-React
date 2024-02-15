@@ -15,7 +15,7 @@ const Layout = () => {
   useFavourites()
   useBookings()
 
-  const { isAuthenticated, user , getAccessTokenSilently} = useAuth0();
+  const { isAuthenticated, user , getAccessTokenSilently , getAccessTokenWithPopup} = useAuth0();
   const { setUserDetails , userDetails } = useContext(UserDetailContext);
 
   const { mutate } = useMutation({
@@ -27,9 +27,9 @@ const Layout = () => {
 
     const getTokenAndRegsiter = async () => {
 
-      const res = await getAccessTokenSilently({
+      const res = await getAccessTokenWithPopup({
         authorizationParams: {
-          audience: BASE_URL,
+          audience: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://eazyhome-backend.vercel.app',
           scope : "openid profile email"
         },
       });

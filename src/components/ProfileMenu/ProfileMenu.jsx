@@ -1,6 +1,7 @@
 import React from 'react'
 import {Avatar, Menu} from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
+
 const ProfileMenu = ({user, logout}) => {
     const navigate = useNavigate()
   return (
@@ -19,7 +20,11 @@ const ProfileMenu = ({user, logout}) => {
 
             <Menu.Item onClick={()=>{
                 localStorage.clear();
-                logout()
+                logout({ 
+        logoutParams: {
+          returnTo: window.location.origin
+        }
+      })
             }}>
                 Logout
             </Menu.Item>
